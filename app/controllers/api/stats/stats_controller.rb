@@ -6,6 +6,6 @@ class Api::Stats::StatsController < ApplicationController
     end
 
     def monthly
-        render json: {"stub": "response"}, status: :ok
+        render json: Trip.monthly_summary.to_json, status: :ok
     end
 end
