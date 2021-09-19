@@ -4,10 +4,11 @@ require 'net/http'
 
 class Api::TripsController < ApplicationController
     def create
-        start_address = params[:trip][:start_address]
-        end_address = params[:trip][:end_address]
-        price = params[:trip][:price].to_f
-        date = DateTime.parse(params[:trip][:date])
+        params.require([:start_address, :end_address, :price, :date])
+        start_address = params[:start_address]
+        end_address = params[:end_address]
+        price = params[:price].to_f
+        date = DateTime.parse(params[:date])
         @trip = Trip.create(price: price, delivery_date: date, distance: get_distance_between(start_address, end_address))
         render json: @trip, status: :ok
     end
