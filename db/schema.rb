@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 2021_09_19_125627) do
   create_table "trips", force: :cascade do |t|
     t.decimal "price"
     t.integer "distance"
+    t.date "delivery_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
