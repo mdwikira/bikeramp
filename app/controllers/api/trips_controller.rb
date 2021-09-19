@@ -3,14 +3,24 @@ require 'uri'
 require 'net/http'
 
 class Api::TripsController < ApplicationController
+
     def create
         params.require([:start_address, :end_address, :price, :date])
-        start_address = params[:start_address]
-        end_address = params[:end_address]
+
         price = params[:price].to_f
         date = DateTime.parse(params[:date])
-        @trip = Trip.create(price: price, delivery_date: date, distance: get_distance_between(start_address, end_address))
-        render json: @trip, status: :ok
+        distance = get_distance_between(
+            params[:start_address],
+            params[:end_address]
+        )
+
+        unless distance.nil?
+            @trip = Trip.create(price: price, delivery_date: date, distance: distance)
+            render json: @trip, status: :ok
+        else
+            render json: {"message": "Can't create trip. Make sure that all parameters are valid."}, status: :bad_request
+        end
+        
     end
 
     private
@@ -21,7 +31,12 @@ class Api::TripsController < ApplicationController
         https = Net::HTTP.new(url.host, url.port)
         https.use_ssl = true
         response = https.request(Net::HTTP::Get.new(url))
-        JSON.parse(response.read_body)["rows"][0]["elements"][0]["distance"]["value"]
+        body = JSON.parse(response.read_body)
+        if body["status"] == "OK"
+            return body["rows"][0]["elements"][0]["distance"]["value"]
+        else
+            return nil
+        end
     end
     
 end
