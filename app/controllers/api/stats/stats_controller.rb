@@ -1,6 +1,8 @@
+require 'date'
+
 class Api::Stats::StatsController < ApplicationController
     def weekly
-        render json: {"stub": "response"}, status: :ok
+        render json: Trip.weekly_summary.to_json, status: :ok
     end
 
     def monthly
