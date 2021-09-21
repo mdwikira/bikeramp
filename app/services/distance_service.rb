@@ -1,11 +1,6 @@
 require 'uri'
 require 'net/http'
 
-# Below implementation is rather a naive one. 
-# If I really wanted to complicate this I would probably use a queue system (like rabbitmq)
-# to defer the request in time in case the Google API wasn't available while the trip was
-# added. This way the user wouldn't notice the temporary problem with external system. 
-# But, for the sake of current exercise I will just log errors.
 class DistanceService
     def initialize
         @api_key = ENV['GOOGLE_MAPS_API_KEY']
