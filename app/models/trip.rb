@@ -4,7 +4,7 @@ require 'date'
 class Trip < ApplicationRecord
     validates :price_before_type_cast, presence: true, format: {with: /\A\d+\.?\d{0,2}\z/, message: "missing or invalid format."}
     validates :delivery_date, presence: true
-    validates :distance, presence: true
+    validates :distance, presence: true, numericality: true
 
     def self.weekly_summary
         stats = Trip.where(
