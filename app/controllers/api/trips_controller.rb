@@ -13,7 +13,7 @@ class Api::TripsController < ApplicationController
         trip = Trip.new(price: price, delivery_date: date, distance: distance)
         if trip.valid?
             trip.save
-            render json: trip, status: :ok
+            render json: trip, status: :created
         else
             render json: {"errors" => prepare_errors_for_client(trip.errors)}, status: :bad_request
         end
