@@ -1,24 +1,14 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## How to run
 
-Things you may want to cover:
+This API is run like any other rails app with `rails server`. Remember to to `bundle install` before. In development mode it uses `sqlite` database, so you don't have to configure any connections right off the bat.
 
-* Ruby version
+Tests are run with `rails test`. 
 
-* System dependencies
+**IMPORTANT** : 
+This API makes use of Google services to handle finding distance between given addresses. 
+Because of this an environment variable called `GOOGLE_MAPS_API_KEY` has to be configured containing a valid API key.
 
-* Configuration
 
-* Database creation
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
