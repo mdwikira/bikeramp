@@ -7,9 +7,13 @@ class Trip < ApplicationRecord
     validates :distance, presence: true
 
     def self.weekly_summary
-        stats = Trip.where("delivery_date >= ?", current_week_start).pluck("SUM(price), SUM(distance)")
+        stats = Trip.where(
+            "delivery_date >= ?", current_week_start
+        ).pluck("SUM(price), SUM(distance)")
+        
         total_price = stats[0][0].nil? ? 0 : stats[0][0]
         total_distance_meters = stats[0][1].nil? ? 0 : stats[0][1]
+
         return {
             :total_distance => format_distance(total_distance_meters),
             :total_price => format_price(total_price)
@@ -17,7 +21,13 @@ class Trip < ApplicationRecord
     end
 
     def self.monthly_summary
-        stats = Trip.where("delivery_date >= ?", current_month_start).group("delivery_date").pluck("delivery_date, SUM(distance), AVG(distance), AVG(price)")
+        stats = Trip.where(
+            "delivery_date >= ?", current_month_start
+        ).group(
+            "delivery_date"
+        ).pluck(
+            "delivery_date, SUM(distance), AVG(distance), AVG(price)"
+        )
 
         stats.map{|s| {
             :day => format_day(s[0]),
