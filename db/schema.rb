@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_19_125627) do
+ActiveRecord::Schema.define(version: 2021_09_21_122329) do
 
   create_table "trips", force: :cascade do |t|
-    t.decimal "price"
+    t.decimal "price", precision: 8, scale: 2
     t.integer "distance"
     t.date "delivery_date"
     t.datetime "created_at", precision: 6, null: false
